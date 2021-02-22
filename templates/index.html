@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload new File</title>
+{#    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">#}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/js/all.min.js"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <link rel="stylesheet" href="static/style.css" type="text/css">
+{#    <h1>Upload new File</h1>#}
+</head>
+<body>
+<div class="wrapper">
+  <div class="container">
+    <h1>Upload a file</h1>
+    <div class="upload-container">
+      <div class="border-container">
+        <div class="icons fa-4x">
+          <i class="fas fa-file-image" data-fa-transform="shrink-3 down-2 left-6 rotate--45"></i>
+          <i class="far fa-file-alt" data-fa-transform="shrink-2 up-4"></i>
+          <i class="far fa-file-pdf" data-fa-transform="shrink-3 down-2 right-6 rotate-45"></i>
+        </div>
+          <p></p>
+          <p></p>
+          <div class="container">
+            <form action="/uploader" method=post enctype=multipart/form-data>
+                <input type="file" name=file[] multiple="">
+                <input type=submit value=Upload>
+            </form>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="url_for('static', filename='main.js')"></script>
