@@ -60,13 +60,12 @@ def upload_files():
             with open(sample_file_path, 'r') as f:
                 sample_data = json.load(f)
 
+            score_result = service.run(json.dumps(sample_data))
+            print(f'Inference result = {score_result}')
             res = json.loads(score_result)
             raw_scores = (res["Raw Scores"])
 
-            score_result = service.run(json.dumps(sample_data))
-            print(f'Inference result = {score_result}')
-
-            risk_id = 1
+            risk_id = 2
             risk_name = 'Data Theft'
             risk_description = 'Theft of Data'
             asset_id = 'FN1002'
@@ -75,42 +74,19 @@ def upload_files():
             risk_ownerid = '1'
             risk_status = 'In Progress'
             risk_severity = ''
-            if sum(risk_score) / len(risk_score) > 0.5:
-                risk_severity = "High"
-            else:
-                risk_severity = "Low"
+            # if sum(risk_score) / len(risk_score) > 0.5:
+            risk_severity = "High"
+            # else:
+            #     risk_severity = "Low"
 
 
             with pyodbc.connect(
                     'DRIVER=' + driver + ';SERVER=' + server + ';PORT=1433;DATABASE=' + database + ';UID=' + username + ';PWD=' + password) as conn:
                 with conn.cursor() as cursor:
-                    cursor.execute("INSERT INTO [dbo].[RISK_MONITORING] VALUES (%s,'Data Theft','Theft of Data','FN1001','1','0.896','1','In Progress','HIGH')", risk_id)
+                    cursor.execute("""INSERT INTO [dbo].[RISK_MONITORING] VALUES ('1','Data Theft','Theft of Data','FN1001','1','0.896','1','In Progress','HIGH')""")
 
         #
         #
 
         return render_template('result.html', var=score_result)
 
-# Insider risk mgmt
-# IT Theft
-# Data Theft
-
-
-# insert data from csv file into dataframe.
-# working directory for csv file: type "pwd" in Azure Data Studio or Linux
-# working directory in Windows c:\users\username
-# df = pd.read_csv("c:\\user\\username\department.csv")
-# # Some other example server values are
-# # server = 'localhost\sqlexpress' # for a named instance
-# # server = 'myserver,port' # to specify an alternate port
-# server = 'sdmdbserver.database.windows.net'
-# database = 'AdventureWorks'
-# username = 'sdmadmin1'
-# password = 'yourpassword'
-# cnxn = pyodbc.connect('DRIVER={SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
-# cursor = cnxn.cursor()
-# # Insert Dataframe into SQL Server:
-# for index, row in df.iterrows():
-#     cursor.execute("INSERT INTO HumanResources.DepartmentTest (DepartmentID,Name,GroupName) values(?,?,?)", row.DepartmentID, row.Name, row.GroupName)
-# cnxn.commit()
-# cursor.close()
